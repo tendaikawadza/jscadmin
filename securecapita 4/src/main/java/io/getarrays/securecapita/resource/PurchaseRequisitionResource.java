@@ -1,6 +1,7 @@
 package io.getarrays.securecapita.resource;
 
 import io.getarrays.securecapita.domain.PurchaseRequisition;
+import io.getarrays.securecapita.domain.StockItemRequisition;
 import io.getarrays.securecapita.report.PurchaseRequisitionReport;
 import io.getarrays.securecapita.service.PurchaseRequisitionService;
 import io.getarrays.securecapita.service.implementation.EmailService;
@@ -11,6 +12,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.List;
 import org.springframework.core.io.Resource;
 
@@ -62,9 +64,17 @@ public class PurchaseRequisitionResource {
         return ResponseEntity.ok(purchaseRequisitionService.getPurchaseRequestById(id));
     }
 
-    @GetMapping(path = "/")
-    public ResponseEntity<List<PurchaseRequisition>> findAll() {
-        return ResponseEntity.ok(purchaseRequisitionService.getAllPurchaseRequests());
+
+    @GetMapping("/list")
+    public ResponseEntity<Collection<PurchaseRequisition>> list(
+            @RequestParam(defaultValue = "1") int page,
+            @RequestParam(defaultValue = "10") int pageSize) {
+
+        // Call the appropriate service method to retrieve the paginated list of stock item requisitions
+        Collection<PurchaseRequisition> purchaseRequisitions = purchaseRequisitionService.list(page, pageSize);
+
+        // Return the paginated list of stock item requisitions in the response body
+        return ResponseEntity.ok(purchaseRequisitions);
     }
 
 //    @PostMapping(path = "/")
@@ -73,18 +83,18 @@ public class PurchaseRequisitionResource {
 //    }
 
 
-
-    @GetMapping("/download/report")
-    public ResponseEntity<Resource> downloadReport() {
-        List<PurchaseRequisition> purchaseRequisitions = new ArrayList<>();
-       // customerService.getCustomers().iterator().forEachRemaining(customers::add);
-
-        purchaseRequisitionService.getAllPurchaseRequests().iterator().forEachRemaining(purchaseRequisitions::add);
-        PurchaseRequisitionReport report = new PurchaseRequisitionReport(purchaseRequisitions);
-        HttpHeaders headers = new HttpHeaders();
-        headers.add("File-Name", "PurchaseRequisition-report.xlsx");
-        headers.add(CONTENT_DISPOSITION, "attachment;File-Name=PurchaseRequisition-report.xlsx");
-        return ResponseEntity.ok().contentType(parseMediaType("application/vnd.ms-excel"))
-                .headers(headers).body(report.export());
-    }
+//
+//    @GetMapping("/download/report")
+//    public ResponseEntity<Resource> downloadReport() {
+//        List<PurchaseRequisition> purchaseRequisitions = new ArrayList<>();
+//       // customerService.getCustomers().iterator().forEachRemaining(customers::add);
+//
+//        purchaseRequisitionService.getAllPurchaseRequests().iterator().forEachRemaining(purchaseRequisitions::add);
+//        PurchaseRequisitionReport report = new PurchaseRequisitionReport(purchaseRequisitions);
+//        HttpHeaders headers = new HttpHeaders();
+//        headers.add("File-Name", "PurchaseRequisition-report.xlsx");
+//        headers.add(CONTENT_DISPOSITION, "attachment;File-Name=PurchaseRequisition-report.xlsx");
+//        return ResponseEntity.ok().contentType(parseMediaType("application/vnd.ms-excel"))
+//                .headers(headers).body(report.export());
+//    }
 }

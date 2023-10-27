@@ -2,6 +2,7 @@ package io.getarrays.securecapita.repository.implementation;
 
 
 
+import io.getarrays.securecapita.domain.PurchaseRequisition;
 import io.getarrays.securecapita.domain.StockItemRequisition;
 import io.getarrays.securecapita.query.StockItemRequisitionQuery;
 import io.getarrays.securecapita.repository.StockItemRequisitionRepository;
@@ -35,7 +36,7 @@ public class StockItemRequisitionRepoImpl implements StockItemRequisitionReposit
     RowMapper<StockItemRequisition> rowMapper = (rs, rowNum) -> {
         StockItemRequisition stockItemRequisition = new StockItemRequisition();
         stockItemRequisition.setRequistingDepartment(rs.getString("requistingDepartment"));
-       stockItemRequisition.setDate(rs.getDate("Date"));
+       stockItemRequisition.setDate(rs.getDate("date"));
         stockItemRequisition.setDepartmentCode(rs.getInt("departmentCode"));
        stockItemRequisition.setPurposeOfIssue(rs.getString("PurposeOfIssue"));
        stockItemRequisition.setItemDescription(rs.getString("ItemDescription"));
@@ -51,6 +52,8 @@ public class StockItemRequisitionRepoImpl implements StockItemRequisitionReposit
 
         return stockItemRequisition;
     };
+
+
 
 
 
@@ -91,7 +94,7 @@ public class StockItemRequisitionRepoImpl implements StockItemRequisitionReposit
     }
     private SqlParameterSource getSqlParameterSource(StockItemRequisition stockItemRequisition) {
         return new MapSqlParameterSource()
-                .addValue("requistingDepartment",stockItemRequisition.getRequistingDepartment())
+                .addValue("requestingDepartment", stockItemRequisition.getRequistingDepartment())
                 .addValue("date", stockItemRequisition.getDate())
                 .addValue("departmentCode", stockItemRequisition.getDepartmentCode())
                 .addValue("purposeOfIssue", stockItemRequisition.getPurposeOfIssue())

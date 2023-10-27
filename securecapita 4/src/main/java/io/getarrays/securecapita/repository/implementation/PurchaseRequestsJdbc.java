@@ -1,6 +1,7 @@
 package io.getarrays.securecapita.repository.implementation;
 
 import io.getarrays.securecapita.domain.PurchaseRequisition;
+import io.getarrays.securecapita.domain.StockItemRequisition;
 import io.getarrays.securecapita.exception.ApiException;
 import io.getarrays.securecapita.query.PurchaseQuery;
 import io.getarrays.securecapita.repository.PurchaseRequestsRepository;
@@ -15,6 +16,7 @@ import org.springframework.jdbc.support.GeneratedKeyHolder;
 import org.springframework.jdbc.support.KeyHolder;
 import org.springframework.stereotype.Repository;
 
+import java.util.Collection;
 import java.util.Collections;
 import java.util.List;
 
@@ -35,6 +37,8 @@ public class PurchaseRequestsJdbc implements PurchaseRequestsRepository<Purchase
 
 
     private final NamedParameterJdbcTemplate jdbc;
+
+    private final List<PurchaseRequisition> purchaseRequisitions;
 
 
 
@@ -109,6 +113,25 @@ public class PurchaseRequestsJdbc implements PurchaseRequestsRepository<Purchase
             throw new ApiException("An error occurred. Please try again.");
         }
     }
+
+
+
+    @Override
+    public Collection<PurchaseRequisition> list(int page, int pageSize) {
+        int startIndex = (page - 1) * pageSize;
+        int endIndex = Math.min(startIndex + pageSize, purchaseRequisitions.size());
+        if (startIndex >= endIndex) {
+            return Collections.emptyList(); // Return an empty list if the startIndex is greater than or equal to endIndex
+        }
+        return purchaseRequisitions.subList(startIndex, endIndex);
+
+
+    }
+
+
+
+
+
 
 //    @Override
 //    public void update(PurchaseRequests purchaseRequests, Long id) {
