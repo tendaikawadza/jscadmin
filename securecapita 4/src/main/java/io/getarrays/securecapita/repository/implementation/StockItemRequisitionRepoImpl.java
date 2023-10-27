@@ -30,15 +30,12 @@ public class StockItemRequisitionRepoImpl implements StockItemRequisitionReposit
 
     private final NamedParameterJdbcTemplate jdbc;
     private final List<StockItemRequisition> stockItemRequisitions;
-
-
-
     RowMapper<StockItemRequisition> rowMapper = (rs, rowNum) -> {
         StockItemRequisition stockItemRequisition = new StockItemRequisition();
         stockItemRequisition.setRequistingDepartment(rs.getString("requistingDepartment"));
        stockItemRequisition.setDate(rs.getDate("date"));
         stockItemRequisition.setDepartmentCode(rs.getInt("departmentCode"));
-       stockItemRequisition.setPurposeOfIssue(rs.getString("PurposeOfIssue"));
+       stockItemRequisition.setPurposeOfIssue(rs.getString("purposeOfIssue"));
        stockItemRequisition.setItemDescription(rs.getString("ItemDescription"));
        stockItemRequisition.setDate(rs.getDate("dateOfPreviousIssue"));
          stockItemRequisition.setPreviousIssueQuantity(rs.getInt("PreviousIssueQuantity"));
@@ -53,10 +50,6 @@ public class StockItemRequisitionRepoImpl implements StockItemRequisitionReposit
         return stockItemRequisition;
     };
 
-
-
-
-
     @Override
     public Collection<StockItemRequisition> list(int page, int pageSize) {
         int startIndex = (page - 1) * pageSize;
@@ -70,26 +63,13 @@ public class StockItemRequisitionRepoImpl implements StockItemRequisitionReposit
     }
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-    @Override
+   @Override
     public StockItemRequisition create(StockItemRequisition stockItemRequisition) {
         KeyHolder holder = new GeneratedKeyHolder();
         SqlParameterSource parameters = getSqlParameterSource(stockItemRequisition);
-        jdbc.update(StockItemRequisitionQuery.INSERT_StockItemRequisition_REQUEST_QUERY,parameters, holder);
+
+
+       jdbc.update(StockItemRequisitionQuery.INSERT_StockItemRequisition_REQUEST_QUERY,parameters, holder);
         return stockItemRequisition;
     }
     private SqlParameterSource getSqlParameterSource(StockItemRequisition stockItemRequisition) {

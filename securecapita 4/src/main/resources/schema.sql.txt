@@ -180,13 +180,13 @@ CREATE TABLE StockItemRequisition (
    requestingDepartment VARCHAR(100) NOT NULL,
    date DATETIME NOT NULL,
    departmentCode INT NOT NULL,
-   PurposeOfIssue VARCHAR(909) NOT NULL,
-   ItemDescription VARCHAR(90) NOT NULL,
+   purposeOfIssue VARCHAR(909) NOT NULL,
+   itemDescription VARCHAR(90) NOT NULL,
    dateOfPreviousIssue DATETIME NOT NULL,
-   PreviousIssueQuantity INT NOT NULL,
-   Quantity INT NOT NULL,
-   InitiatedBy VARCHAR(50) NOT NULL,
-   Signature VARCHAR(50) NOT NULL,
+   previousIssueQuantity INT NOT NULL,
+   quantity INT NOT NULL,
+   initiatedBy VARCHAR(50) NOT NULL,
+   signature VARCHAR(50) NOT NULL,
    receiverEmail VARCHAR(50) NOT NULL
 );
 

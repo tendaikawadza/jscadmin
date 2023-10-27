@@ -16,19 +16,20 @@ import static com.fasterxml.jackson.annotation.JsonInclude.Include.NON_DEFAULT;
 @AllArgsConstructor
 @JsonInclude(NON_DEFAULT)
 public class StockItemRequisition {
+    private Long id;
 
     private  String requistingDepartment;
     private Date date;
     private  int departmentCode;
-    private  String PurposeOfIssue;
-    private String ItemDescription;
+    private  String purposeOfIssue;
+    private String itemDescription;
     private Date  dateOfPreviousIssue;
 
     private  int PreviousIssueQuantity;
     private int Quantity;
 
     private String InitiatedBy;
-     private String Signature;
+     private String signature;
     private  String receiverEmail;
 
 
